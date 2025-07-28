@@ -5,11 +5,43 @@ const cors = require('cors');
 
 const app = express();
 
-// Middleware
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+// CORS configuration - Allow all Vercel domains
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost for development
+    if (origin.startsWith('http://localhost:')) {
+      return callback(null, true);
+    }
+    
+    // Allow all Vercel domains
+    if (origin.includes('vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Allow specific domains
+    const allowedOrigins = [
+      'https://multi-component-generater.vercel.app',
+      'https://component-multi-component-generator-platform.vercel.app',
+      'https://component-multi-component-generator-platform-git-main-ravi.vercel.app',
+      'https://component-multi-component-generator-platform-ravi.vercel.app'
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,7 +49,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('MongoDB connected successfully'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Placeholder for routes
 app.use('/auth', require('./routes/auth'));
 app.use('/sessions', require('./routes/sessions'));
 app.use('/ai', require('./routes/ai'));
