@@ -32,7 +32,7 @@ interface StoreState {
   reset: () => void;
 }
 
-export const useStore = create<StoreState>((set: any) => ({
+export const useStore = create<StoreState>((set) => ({
   user: null,
   token: null,
   sessions: [],

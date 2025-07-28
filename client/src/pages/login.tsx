@@ -20,7 +20,7 @@ export default function LoginPage() {
       router.push('/');
     } catch (err: unknown) {
       if (typeof err === 'object' && err && 'response' in err) {
-        setError((err as any).response?.data?.message || 'Login failed');
+        setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Login failed');
       } else {
         setError('Login failed');
       }

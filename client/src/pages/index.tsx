@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Code, Download, LogOut, User, MessageSquare, Eye, Copy } from 'lucide-react';
+import { Sparkles, Download, LogOut, User } from 'lucide-react';
 import ChatPanel from '../components/ChatPanel';
 import CodeTabs from '../components/CodeTabs';
 import LivePreview from '../components/LivePreview';
 import SessionList from '../components/SessionList';
 import { useStore } from '../store/useStore';
 import { getSessions, createSession, getSessionById, aiGenerate, exportSession } from '../services/api';
-import '../app/globals.css';
+import '../app/globals.css'; // Crucial import for CSS to load
 
 export default function HomePage() {
   const { user, token, sessions, currentSession, chat, code, css, setUser, setSessions, setCurrentSession, setChat, setCode, setCss } = useStore();
-  const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
+  const [sessionLoading, setSessionLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
 
@@ -64,14 +64,14 @@ export default function HomePage() {
 
   const handleSelectSession = async (id: string) => {
     if (!token) return;
-    setLoading(true);
+    setSessionLoading(true);
     try {
       const res = await getSessionById(id, token);
       setCurrentSession(res.data);
     } catch {
       setError('Failed to load session');
     } finally {
-      setLoading(false);
+      setSessionLoading(false);
     }
   };
 

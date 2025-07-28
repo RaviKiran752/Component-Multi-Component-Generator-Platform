@@ -20,7 +20,7 @@ export default function SignupPage() {
       router.push('/');
     } catch (err: unknown) {
       if (typeof err === 'object' && err && 'response' in err) {
-        setError((err as any).response?.data?.message || 'Signup failed');
+        setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Signup failed');
       } else {
         setError('Signup failed');
       }
