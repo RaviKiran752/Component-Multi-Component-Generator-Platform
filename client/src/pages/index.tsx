@@ -30,7 +30,12 @@ export default function HomePage() {
   // Fetch sessions on login
   useEffect(() => {
     if (token) {
-      getSessions(token).then(res => setSessions(res.data)).catch(() => {});
+      getSessions(token).then(res => {
+        console.log('Sessions loaded:', res.data);
+        setSessions(res.data);
+      }).catch((err) => {
+        console.error('Failed to load sessions:', err);
+      });
     }
   }, [token, setSessions]);
 
@@ -176,11 +181,9 @@ export default function HomePage() {
         {/* Sidebar */}
         <motion.div
           initial={{ x: -300, opacity: 0 }}
-          animate={{ x: sidebarOpen ? 0 : -300, opacity: sidebarOpen ? 1 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className={`fixed md:relative z-30 w-72 md:w-80 bg-white/10 backdrop-blur-xl border-r border-white/20 flex flex-col h-full transform ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-          }`}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="hidden md:flex w-80 bg-white/10 backdrop-blur-xl border-r border-white/20 flex-col"
         >
           <div className="flex-1 p-4 sm:p-6 overflow-hidden">
             <SessionList sessions={sessions} onSelect={handleSelectSession} currentId={currentSession?._id || null} />
@@ -205,6 +208,36 @@ export default function HomePage() {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Mobile Sidebar */}
+        <AnimatePresence>
+          {sidebarOpen && (
+            <motion.div
+              initial={{ x: -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed md:hidden z-30 w-72 bg-white/10 backdrop-blur-xl border-r border-white/20 flex flex-col h-full"
+            >
+              <div className="flex-1 p-4 overflow-hidden">
+                <SessionList sessions={sessions} onSelect={handleSelectSession} currentId={currentSession?._id || null} />
+              </div>
+
+              <div className="p-4 pt-0">
+                <motion.button
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleExport}
+                  disabled={!currentSession}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2 px-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 text-xs"
+                >
+                  <Download className="w-3 h-3" />
+                  <span>Download Zip</span>
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
