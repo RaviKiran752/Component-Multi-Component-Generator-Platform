@@ -24,3 +24,52 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button, input, a {
+    min-height: 44px;
+  }
+  
+  /* Better text readability on mobile */
+  input, textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Improve contrast for better visibility */
+  .text-gray-300 {
+    color: rgba(209, 213, 219, 0.9) !important;
+  }
+  
+  .text-gray-400 {
+    color: rgba(156, 163, 175, 0.8) !important;
+  }
+  
+  /* Better spacing for mobile */
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Improve focus states for accessibility */
+input:focus, button:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better backdrop blur support */
+@supports (backdrop-filter: blur(1px)) {
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+  }
+}
