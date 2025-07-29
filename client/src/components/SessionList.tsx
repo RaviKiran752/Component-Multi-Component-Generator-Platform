@@ -18,10 +18,10 @@ export default function SessionList({ sessions, onSelect, currentId }: SessionLi
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-4"
+        className="flex items-center justify-between mb-3 sm:mb-4"
       >
-        <h3 className="text-lg font-semibold text-white">Sessions</h3>
-        <div className="bg-blue-500/20 backdrop-blur-sm text-blue-200 text-xs font-medium px-3 py-1 rounded-full border border-blue-500/30">
+        <h3 className="text-base sm:text-lg font-semibold text-white">Sessions</h3>
+        <div className="bg-blue-500/20 backdrop-blur-sm text-blue-200 text-xs font-medium px-2 sm:px-3 py-1 rounded-full border border-blue-500/30">
           {sessions.length}
         </div>
       </motion.div>
@@ -32,17 +32,17 @@ export default function SessionList({ sessions, onSelect, currentId }: SessionLi
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-8"
+              className="text-center py-6 sm:py-8"
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-blue-300" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-300" />
               </div>
-              <p className="text-gray-300 text-sm">No sessions yet</p>
+              <p className="text-gray-300 text-xs sm:text-sm">No sessions yet</p>
               <p className="text-gray-400 text-xs mt-1">Your conversations will appear here</p>
             </motion.div>
           ) : (
             <motion.div 
-              className="space-y-2"
+              className="space-y-1.5 sm:space-y-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -55,7 +55,7 @@ export default function SessionList({ sessions, onSelect, currentId }: SessionLi
                   whileHover={{ scale: 1.02, x: 5 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSelect(session._id)}
-                  className={`w-full text-left p-3 rounded-xl border transition-all duration-200 ${
+                  className={`w-full text-left p-2.5 sm:p-3 rounded-lg sm:rounded-xl border transition-all duration-200 ${
                     currentId === session._id 
                       ? 'bg-blue-500/20 border-blue-400/50 shadow-lg shadow-blue-500/20' 
                       : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
@@ -63,16 +63,16 @@ export default function SessionList({ sessions, onSelect, currentId }: SessionLi
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <FileText className="w-4 h-4 text-blue-300 flex-shrink-0" />
-                        <p className={`text-sm font-medium truncate ${
+                      <div className="flex items-center space-x-1.5 sm:space-x-2 mb-1">
+                        <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-blue-300 flex-shrink-0" />
+                        <p className={`text-xs sm:text-sm font-medium truncate ${
                           currentId === session._id ? 'text-blue-200' : 'text-white'
                         }`}>
                           Session {session._id.slice(-6)}
                         </p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                      <div className="flex items-center space-x-1.5 sm:space-x-2">
+                        <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-400 flex-shrink-0" />
                         <p className={`text-xs truncate ${
                           currentId === session._id ? 'text-blue-300' : 'text-gray-400'
                         }`}>
@@ -91,9 +91,9 @@ export default function SessionList({ sessions, onSelect, currentId }: SessionLi
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           exit={{ scale: 0 }}
-                          className="text-blue-400 flex-shrink-0 ml-2"
+                          className="text-blue-400 flex-shrink-0 ml-1.5 sm:ml-2"
                         >
-                          <CheckCircle className="w-5 h-5" />
+                          <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                         </motion.div>
                       )}
                     </AnimatePresence>
