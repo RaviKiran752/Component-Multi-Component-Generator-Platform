@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import AuthForm from '../components/AuthForm';
 import { signup } from '../services/api';
 import { useStore } from '../store/useStore';
+import '../app/globals.css'; // Ensure CSS is loaded
 
 export default function SignupPage() {
   const setUser = useStore(s => s.setUser);
